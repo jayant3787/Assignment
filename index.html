@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Edumerge Assessment</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="Login-page">
+        <div class="Form">
+            <form class="Register-form">
+                <input id="uname" type="text" placeholder="User name" required/>
+                <input id='name' type="text" placeholder="Name" required/>
+                <input id="password" type="password" placeholder="Password" required/>
+                <input id='pnumber' type="number" placeholder="Phone number" required/>
+                <button id="registerButton" type="submit" onclick="dataStorage()">Create</button>
+                <p class="message"> Already Registered? <a href="#">Login</a></p>
+            </form>
+            <form class="Login-form">
+                <input id="Uname" type="text" placeholder="Username"/>
+                <input id="uPassword" type="password" placeholder="Password"/>
+                <button id="loginButton" type="submit" onclick="Login()">Login</button>
+                <p class="message">Not Registered? <a href="#">Register</a></p>
+            </form>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        
+ 
+        $('.message a').click(function(){
+            $('form').animate({height:'toggle', opecity: 'toggle'},'slow');
+
+        });
+    </script>
+    
+    <script>
+        function show() {
+            //console.log("display")
+            showWindow = window.open('','newWindow','toolbar=no,status=no,width=400,height=300')
+            message = '<ul><li><b>USERNAME:</b>'+ localStorage.getItem('userNAME');
+            message += '<li><b>NAME:</b>'+ localStorage.getItem('Name');
+            message += '<li><b>PASSWORD:</b>'+ localStorage.getItem('userPswrd');
+            message += '<li><b>PHONE No:</b>'+ localStorage.getItem('userPnumber'); + '</ul>';
+            showWindow.document.write(message);
+        }
+        function dataStorage() {
+            //console.log(userId.value, 'jay');
+            var userName = document.getElementById('uname');
+            var Name = document.getElementById('name');
+            var userPnumber = document.getElementById('pnumber');
+            var userPassword = document.getElementById('password');
+            var lowerCase = /[a-z]/g;
+            var upperCase = /[A-Z]/g;
+            var splSymbol = /[-!$%^&*()_+|~=`{}[:;<>?,.@#\]]/g;
+            var number = /[0-9]/g;
+            //console.log(userEmail.value,'jayant');
+            
+            if(userPassword.value.length < 8){
+                alert('plase enter atleast 8 characters');
+            }
+            else if (!userPassword.value.match(number)){
+                alert('one number should be present in the password');
+            }
+            else if (!userPassword.value.match(upperCase)) {
+                alert('one uppercase letter should be present in the password');
+            }
+            else if(!userPassword.value.match(lowerCase)){
+                alert('one lowercase letter should be present in the password');
+            }
+            else if(!userPassword.value.match(splSymbol)){
+                alert('one special symbol should be present in the password');
+            }
+            else{
+                localStorage.setItem('userNAME',userName.value);
+                localStorage.setItem('Name',Name.value);
+                localStorage.setItem('userPnumber',userPnumber.value);
+                localStorage.setItem('userPswrd',userPassword.value);
+                alert("your account has been created");
+            }
+        }
+        function Login() {
+            var uName = localStorage.getItem('userNAME');
+            var pswrd = localStorage.getItem('userPswrd');
+
+            var user = document.getElementById('Uname');
+            var psw = document.getElementById('uPassword');
+            console.log(user.value,'userName');
+            console.log(psw.value,'UserPD');
+
+            console.log(uName,'StoredName');
+            console.log(pswrd,'Storedpswd');
+
+            
+            if (user.value == uName && psw.value == pswrd ) {
+                alert(user.value+'Login Successful');
+
+                show()
+                
+            }
+            else{
+                alert('Login Failed! Enter the correct Password');
+            }
+            
+        }
+    </script>
+    
+</body>
+</html>
